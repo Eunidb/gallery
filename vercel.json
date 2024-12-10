@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "routes": [
+        {
+            "src": "/service-worker.js",
+            "headers": {
+                "Cache-Control": "public, max-age=43200, immutable",
+                "Service-Worker-Allowed": "/"
+            }
+        }
+    ]
+}
