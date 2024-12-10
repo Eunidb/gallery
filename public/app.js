@@ -84,3 +84,28 @@ function deleteImageFromDB(store, id) {
 
 // Reemplaza el event listener 'online' existente
 window.addEventListener('online', uploadOfflineImages);
+
+// Código nuevo para mostrar las imágenes
+const imageContainer = document.getElementById('image-container');
+
+async function displayImages() {
+    try {
+        const db = await openDatabase();
+        const transaction = db.transaction('images', 'readonly');
+        const store = transaction.objectStore('images');
+        const images = await getAllImages(store);
+
+        imageContainer.innerHTML = '';
+        images.forEach((image) => {
+            const img = document.createElement('img');
+            img.src = image.image;
+            img.alt = 'Uploaded Image';
+            imageContainer.appendChild(img);
+        });
+    } catch (error) {
+        console.error('Error al mostrar las imágenes:', error);
+    }
+}
+
+// Llama a la función para mostrar las imágenes al cargar la página
+window.addEventListener('load', displayImages);

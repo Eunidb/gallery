@@ -36,3 +36,16 @@ function saveImage(file) {
 app.listen(3000, () => {
     console.log('Servidor escuchando en el puerto 3000');
 });
+
+app.get('/images', (req, res) => {
+    const imagesDir = path.join(__dirname, 'uploads');
+    fs.readdir(imagesDir, (err, files) => {
+        if (err) {
+            console.error('Error al leer el directorio de imágenes:', err);
+            res.status(500).send('Error al obtener las imágenes');
+        } else {
+            const imageUrls = files.map((file) => `/images/${file}`);
+            res.json(imageUrls);
+        }
+    });
+});
